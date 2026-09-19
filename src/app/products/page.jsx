@@ -1,6 +1,11 @@
 import { getProducts } from "@/actions/server/products";
 import ProductCard from "@/components/Card/ProductCard";
 
+export const metadata = {
+  title: "All Products",
+  description: "Browse our collection of educational toys and learning tools for kids.",
+};
+
 export default async function Page() {
   const products = await getProducts();
 

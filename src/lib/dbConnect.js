@@ -1,5 +1,9 @@
-import dns from "dns";
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
+// import dns from "dns";
+// dns.setServers(["8.8.8.8", "8.8.4.4"]);
+// dns.setServers(["1.1.1.1", "1.0.0.1"])
+
+import dns from "node:dns/promises";
+dns.setServers(["1.1.1.1"]);
 
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const uri = process.env.DB_URI;
