@@ -1,7 +1,10 @@
+import dns from "dns";
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = process.env.DB_URI;
 const dbname = process.env.DB_NAME;
-const collections = {
+export const collections = {
     PRODUCTS: "products",
 }
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
