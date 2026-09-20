@@ -3,6 +3,7 @@
 import { postUser } from "@/actions/server/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
@@ -25,7 +26,7 @@ export default function RegisterForm({ onSubmit, onGoogleSignIn }) {
     const result = await postUser(formData);
     if(result.acknowledged){
         router.push("/");
-        alert("Register successfully completed.")
+        toast.success("Register successfully completed.")
     }
     if (onSubmit) {
       onSubmit(formData);

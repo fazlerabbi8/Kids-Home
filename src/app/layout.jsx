@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navber from "@/components/layout/Navber";
 import Footer from "@/components/layout/Footer";
+import { Toaster } from "react-hot-toast";
 
 
 const poppins = Poppins({
@@ -112,7 +113,9 @@ export default function RootLayout({ children }) {
         <header className="py-2 w-11/12 mx-auto">
           <Navber></Navber>
         </header>
-        <main className="flex-1 py-2 w-11/12 mx-auto">{children}</main>
+        <main className="flex-1 py-2 w-11/12 mx-auto">{children}
+        <Toaster position="top-center" />
+        </main>
         <footer>
           <Footer></Footer>
         </footer>
