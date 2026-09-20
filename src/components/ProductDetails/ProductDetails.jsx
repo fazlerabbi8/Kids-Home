@@ -1,6 +1,7 @@
 "use client";
 
 import { FaStar, FaShoppingCart } from "react-icons/fa";
+import CartButton from "../CartButton/CartButton";
 
 export default function ProductDetails({ product }) {
   const {
@@ -51,9 +52,7 @@ export default function ProductDetails({ product }) {
               </h1>
 
               {bangla && (
-                <p className="text-sm text-base-content/60 mt-1">
-                  {bangla}
-                </p>
+                <p className="text-sm text-base-content/60 mt-1">{bangla}</p>
               )}
             </div>
 
@@ -64,13 +63,9 @@ export default function ProductDetails({ product }) {
                 {ratings}
               </span>
 
-              <span className="text-base-content/60">
-                {reviews} reviews
-              </span>
+              <span className="text-base-content/60">{reviews} reviews</span>
 
-              <span className="text-base-content/60">
-                {sold} sold
-              </span>
+              <span className="text-base-content/60">{sold} sold</span>
             </div>
 
             <div className="divider my-3" />
@@ -96,9 +91,7 @@ export default function ProductDetails({ product }) {
 
             {/* Description */}
             <div className="mt-5">
-              <h2 className="font-semibold text-lg mb-2">
-                Description
-              </h2>
+              <h2 className="font-semibold text-lg mb-2">Description</h2>
 
               <p className="text-sm leading-6 text-base-content/75 whitespace-pre-line">
                 {description}
@@ -122,10 +115,7 @@ export default function ProductDetails({ product }) {
 
             {/* Add To Cart */}
             <div className="mt-6">
-              <button className="btn btn-primary w-full">
-                <FaShoppingCart />
-                Add to Cart
-              </button>
+              <CartButton product={product}></CartButton>
             </div>
           </div>
         </div>
@@ -136,9 +126,7 @@ export default function ProductDetails({ product }) {
         <div className="mt-8">
           <div className="card bg-base-100 shadow-lg border border-base-200">
             <div className="card-body">
-              <h2 className="card-title text-xl">
-                Questions & Answers
-              </h2>
+              <h2 className="card-title text-xl">Questions & Answers</h2>
 
               <div className="mt-2 space-y-2">
                 {qna.map((item, index) => (

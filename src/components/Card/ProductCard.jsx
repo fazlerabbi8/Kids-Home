@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FaStar, FaShoppingCart, FaEye } from "react-icons/fa";
 
 export default function ProductCard({ product, index }) {
-     console.log("ProductCard received:", product);
+
   const {
     _id,
     title,
