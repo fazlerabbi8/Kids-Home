@@ -18,9 +18,7 @@ export default function LoginForm({ onSubmit, onGoogleSignIn }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (onSubmit) {
-      onSubmit(formData);
-    }
+    console.log(formData)
   };
 
   return (

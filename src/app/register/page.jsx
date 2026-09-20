@@ -1,5 +1,7 @@
 "use client";
 
+import { postUser } from "@/actions/server/auth";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -12,12 +14,19 @@ export default function RegisterForm({ onSubmit, onGoogleSignIn }) {
     password: "",
   });
 
+  const router = useRouter()
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    const result = await postUser(formData);
+    if(result.acknowledged){
+        router.push("/");
+        alert("Register successfully completed.")
+    }
     if (onSubmit) {
       onSubmit(formData);
     }
