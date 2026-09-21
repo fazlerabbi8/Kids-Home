@@ -39,7 +39,7 @@ const Login = () => {
 
     if (result?.ok) {
       toast.success("Login successful.");
-      router.push("/");
+      router.push(callBackUrl);
       router.refresh();
     } else {
       toast.error("Incorrect email or password.");

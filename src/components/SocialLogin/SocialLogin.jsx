@@ -1,17 +1,19 @@
 "use client"
 
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 
 const SocialLogin = () => {
+      const params = useSearchParams();
+      const callBackUrl = params.get("callbackUrl") || "/";
     const router = useRouter();
     const handleGoogleLogin = async() => {
-        const result = await signIn('google', {callbackUrl: "/"})
+        const result = await signIn('google', {callbackUrl: callBackUrl})
         if(result.ok){
             toast.success("Login successfully.")
-            router.push('/');
+            router.push(callBackUrl);
         }else{
             toast.error("something went wrong!")
         }
