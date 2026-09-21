@@ -2,6 +2,7 @@ import Link from "next/link";
 import Logo from "../Logo";
 import NavLink from "../ActiveButton/NavLink";
 import { FaShoppingCart } from "react-icons/fa";
+import AuthButton from "../AuthButton/AuthButton";
 
 const Navber = () => {
   const Navlinks = (
@@ -59,9 +60,7 @@ const Navber = () => {
           <Link className="btn btn-primary text-xl" href={"/cart"}>
             <FaShoppingCart />
           </Link>
-          <Link href={"/login"}>
-            <button className="btn btn-primary btn-outline">Login</button>
-          </Link>
+          <AuthButton></AuthButton>
         </div>
       </div>
     </div>

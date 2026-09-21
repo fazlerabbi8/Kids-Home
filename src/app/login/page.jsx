@@ -1,7 +1,10 @@
 
 "use client";
 
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
@@ -12,13 +15,22 @@ export default function LoginForm({ onSubmit, onGoogleSignIn }) {
     password: "",
   });
 
+  const router = useRouter()
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(formData)
+    const result = await signIn('credentials', {email:  formData.email, password: formData.password, redirect: false})
+    console.log(result)
+    if(result.ok){
+      toast.success("Login successfully.")
+      router.push('/')
+    }else{
+      toast.error("incorrect email and password.");
+    }
   };
 
   return (
