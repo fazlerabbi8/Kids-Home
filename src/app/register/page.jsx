@@ -1,13 +1,17 @@
 "use client";
 
 import { postUser } from "@/actions/server/auth";
-import { useRouter } from "next/navigation";
+import SocialLogin from "@/components/SocialLogin/SocialLogin";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 export default function RegisterForm({ onSubmit, onGoogleSignIn }) {
+  const params = useSearchParams();
+  const callBackUrl = params.get('callbackUrl') || "/";
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -25,7 +29,8 @@ export default function RegisterForm({ onSubmit, onGoogleSignIn }) {
     e.preventDefault();
     const result = await postUser(formData);
     if(result.acknowledged){
-        router.push("/");
+        // router.push("/");
+        const result = await signIn("credentials", {email: formData.email, password: formData.password, callbackUrl: callBackUrl})
         toast.success("Register successfully completed.")
     }
     if (onSubmit) {
@@ -97,14 +102,7 @@ export default function RegisterForm({ onSubmit, onGoogleSignIn }) {
 
         <div className="divider">OR</div>
 
-        <button
-          onClick={onGoogleSignIn}
-          className="btn btn-outline w-full gap-2"
-          type="button"
-        >
-          <FcGoogle size={20} />
-          Google
-        </button>
+        <SocialLogin></SocialLogin>
 
         <p className="text-center mt-4 text-sm">
           Already have an account?{" "}
