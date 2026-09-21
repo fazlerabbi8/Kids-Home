@@ -1,52 +1,74 @@
 
 "use client";
 
-import { signIn } from "next-auth/react"
+import SocialLogin from "@/components/SocialLogin/SocialLogin";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
+import {
+  FaEnvelope,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
 
-export default function LoginForm({ onSubmit, onGoogleSignIn }) {
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const router = useRouter()
+  const router = useRouter();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await signIn('credentials', {email:  formData.email, password: formData.password, redirect: false})
-    console.log(result)
-    if(result.ok){
-      toast.success("Login successfully.")
-      router.push('/')
-    }else{
-      toast.error("incorrect email and password.");
+
+    const result = await signIn("credentials", {
+      email: formData.email,
+      password: formData.password,
+      redirect: false,
+    });
+
+    console.log(result);
+
+    if (result?.ok) {
+      toast.success("Login successful.");
+      router.push("/");
+      router.refresh();
+    } else {
+      toast.error("Incorrect email or password.");
     }
   };
 
   return (
     <div className="card w-full max-w-md bg-base-100 shadow-xl mx-auto mb-10">
       <div className="card-body">
-        <h2 className="text-3xl font-bold text-center mb-4">Login</h2>
+        <h2 className="text-3xl font-bold text-center mb-4">
+          Login
+        </h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4"
+        >
           {/* Email */}
           <label className="input w-full input-bordered flex items-center gap-2">
             <FaEnvelope className="text-base-content/50" />
+
             <input
               type="email"
               name="email"
               placeholder="Email"
-              className=""
               value={formData.email}
               onChange={handleChange}
               required
@@ -54,8 +76,9 @@ export default function LoginForm({ onSubmit, onGoogleSignIn }) {
           </label>
 
           {/* Password */}
-          <label className="input  w-full input-bordered flex items-center gap-2">
+          <label className="input w-full input-bordered flex items-center gap-2">
             <FaLock className="text-base-content/50" />
+
             <input
               type={showPassword ? "text" : "password"}
               name="password"
@@ -65,9 +88,12 @@ export default function LoginForm({ onSubmit, onGoogleSignIn }) {
               onChange={handleChange}
               required
             />
+
             <button
               type="button"
-              onClick={() => setShowPassword((prev) => !prev)}
+              onClick={() =>
+                setShowPassword((prev) => !prev)
+              }
               className="text-base-content/50"
               tabIndex={-1}
             >
@@ -75,27 +101,28 @@ export default function LoginForm({ onSubmit, onGoogleSignIn }) {
             </button>
           </label>
 
+          {/* Forgot Password */}
           <div className="text-right -mt-2">
-            <a href="/forgot-password" className="link link-hover text-sm">
+            <a
+              href="/forgot-password"
+              className="link link-hover text-sm"
+            >
               Forgot password?
             </a>
           </div>
 
-          <button type="submit" className="btn btn-primary w-full">
+          {/* Login */}
+          <button
+            type="submit"
+            className="btn btn-primary w-full"
+          >
             Login
           </button>
         </form>
 
         <div className="divider">OR</div>
 
-        <button
-          onClick={onGoogleSignIn}
-          className="btn btn-outline w-full gap-2"
-          type="button"
-        >
-          <FcGoogle size={20} />
-          Google
-        </button>
+        <SocialLogin />
 
         <p className="text-center mt-4 text-sm">
           Don&apos;t have an account?{" "}
@@ -106,4 +133,7 @@ export default function LoginForm({ onSubmit, onGoogleSignIn }) {
       </div>
     </div>
   );
-}
+};
+
+export default Login;
+

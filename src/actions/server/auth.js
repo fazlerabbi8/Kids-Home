@@ -2,7 +2,6 @@
 
 import bcrypt from "bcryptjs";
 import { collections, dbConnect } from "@/lib/dbConnect";
-import { exportTraceState } from "next/dist/trace";
 
 export const postUser = async(payload) =>{
     const {email, password, name} = payload;
