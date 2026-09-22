@@ -79,3 +79,59 @@ export const deleteCart = async (id) => {
 
   return result;
 };
+
+
+
+export const incrementCart = async (id) => {
+  try {
+    const cartCollection = await dbConnect(collections.CART);
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.email) {
+      return { success: false, message: "User is not logged in" };
+    }
+
+    const { email } = session.user;
+    const query = { _id: new ObjectId(id), email };
+
+    const result = await cartCollection.updateOne(query, {
+      $inc: { quantity: 1 },
+    });
+
+    revalidatePath("/cart");
+    return { success: result.modifiedCount > 0 };
+  } catch (err) {
+    console.error("incrementCart error:", err);
+    return { success: false, message: err.message };
+  }
+};
+
+export const decrementCart = async (id) => {
+  try {
+    const cartCollection = await dbConnect(collections.CART);
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.email) {
+      return { success: false, message: "User is not logged in" };
+    }
+
+    const { email } = session.user;
+    const query = { _id: new ObjectId(id), email };
+
+    const item = await cartCollection.findOne(query);
+
+    if (!item || item.quantity <= 1) {
+      return { success: false, message: "Quantity cannot go below 1" };
+    }
+
+    const result = await cartCollection.updateOne(query, {
+      $inc: { quantity: -1 },
+    });
+
+    revalidatePath("/cart");
+    return { success: result.modifiedCount > 0 };
+  } catch (err) {
+    console.error("decrementCart error:", err);
+    return { success: false, message: err.message };
+  }
+};

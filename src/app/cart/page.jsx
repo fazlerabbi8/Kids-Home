@@ -40,7 +40,7 @@ const CartPage = async () => {
 
             <div className="flex-1">
               <h2 className="font-medium">{item.title}</h2>
-              <CartItemActions itemId={item._id.toString()} />
+              <CartItemActions item={{ ...item, _id: item._id.toString() }} />
             </div>
 
             <div className="text-right">
