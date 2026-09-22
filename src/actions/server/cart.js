@@ -3,6 +3,7 @@
 import { authOptions } from "@/lib/authOptions";
 import { collections, dbConnect } from "@/lib/dbConnect";
 import { getServerSession } from "next-auth";
+import Swal from "sweetalert2";
 
 export const handleCart = async ({ product, increment = true }) => {
   try {
@@ -41,5 +42,23 @@ export const handleCart = async ({ product, increment = true }) => {
   } catch (err) {
     console.error("handleCart error:", err);
     return { success: false, message: err.message };
+  }
+};
+
+export const getCartData = async () => {
+  try {
+    const cartCollection = await dbConnect(collections.CART);
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.email) {
+      return [];
+    }
+
+    const { email } = session.user;
+    const result = await cartCollection.find({ email }).toArray();
+    return result;
+  } catch (error) {
+    console.error("Get cart error:", error);
+    return [];
   }
 };
