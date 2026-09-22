@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FaStar, FaShoppingCart, FaEye } from "react-icons/fa";
+import CartButton from "../CartButton/CartButton";
 
 export default function ProductCard({ product, index }) {
 
@@ -57,10 +58,7 @@ export default function ProductCard({ product, index }) {
         </div>
 
         {/* Add to Cart */}
-        <button className="btn btn-primary btn-sm mt-3 w-full">
-          <FaShoppingCart className="mr-1" />
-          Add to Cart
-        </button>
+        <CartButton product={product}></CartButton>
 
         {/* View Details */}
         <Link href={`/products/${_id}`} className="btn btn-outline btn-sm mt-2 w-full">

@@ -29,7 +29,7 @@ export default function RegisterForm({ onSubmit, onGoogleSignIn }) {
     e.preventDefault();
     const result = await postUser(formData);
     if(result.acknowledged){
-        // router.push("/");
+        router.push("/");
         const result = await signIn("credentials", {email: formData.email, password: formData.password, callbackUrl: callBackUrl})
         toast.success("Register successfully completed.")
     }
