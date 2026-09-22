@@ -1,4 +1,5 @@
 import { getCartData } from "@/actions/server/cart";
+import CartItemActions from "@/components/CartItemActions/CartItemActions";
 import Image from "next/image";
 
 const CartPage = async () => {
@@ -6,7 +7,7 @@ const CartPage = async () => {
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
-    0
+    0,
   );
 
   if (cartItems.length === 0) {
@@ -39,20 +40,7 @@ const CartPage = async () => {
 
             <div className="flex-1">
               <h2 className="font-medium">{item.title}</h2>
-
-              <div className="flex items-center gap-2 mt-2">
-                <button className="w-7 h-7 flex items-center justify-center border rounded">
-                  -
-                </button>
-                <span className="w-6 text-center">{item.quantity}</span>
-                <button className="w-7 h-7 flex items-center justify-center border rounded">
-                  +
-                </button>
-
-                <button className="ml-4 btn text-sm text-white bg-primary text-primary">
-                  Remove
-                </button>
-              </div>
+              <CartItemActions itemId={item._id.toString()} />
             </div>
 
             <div className="text-right">

@@ -2,8 +2,10 @@
 
 import { authOptions } from "@/lib/authOptions";
 import { collections, dbConnect } from "@/lib/dbConnect";
+import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth";
-import Swal from "sweetalert2";
+import { revalidatePath } from "next/cache";
+import { cache } from "react";
 
 export const handleCart = async ({ product, increment = true }) => {
   try {
@@ -45,7 +47,7 @@ export const handleCart = async ({ product, increment = true }) => {
   }
 };
 
-export const getCartData = async () => {
+export const getCartData = cache(async () => {
   try {
     const cartCollection = await dbConnect(collections.CART);
     const session = await getServerSession(authOptions);
@@ -61,4 +63,19 @@ export const getCartData = async () => {
     console.error("Get cart error:", error);
     return [];
   }
+});
+
+
+export const deleteCart = async (id) => {
+  const cartCollection = await dbConnect(collections.CART);
+  const session = await getServerSession(authOptions);
+
+  const { email } = session.user;
+  const query = { _id: new ObjectId(id), email };
+
+  const result = await cartCollection.deleteOne(query);
+
+  revalidatePath("/cart");
+
+  return result;
 };
