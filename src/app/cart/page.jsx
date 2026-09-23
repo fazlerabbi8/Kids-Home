@@ -1,6 +1,7 @@
 import { getCartData } from "@/actions/server/cart";
 import CartItemActions from "@/components/CartItemActions/CartItemActions";
 import Image from "next/image";
+import Link from "next/link";
 
 const CartPage = async () => {
   const cartItems = await getCartData();
@@ -79,9 +80,9 @@ const CartPage = async () => {
             <span className="text-xl font-bold">৳{subtotal.toFixed(2)}</span>
           </div>
 
-          <button className="w-full mt-6 btn bg-primary text-white font-medium py-2.5 rounded-md hover:opacity-90">
+          <Link href={"/checkout"} className="w-full mt-6 btn bg-primary text-white font-medium py-2.5 rounded-md hover:opacity-90">
             Confirm Order
-          </button>
+          </Link>
         </div>
       </div>
     </div>
