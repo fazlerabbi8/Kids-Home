@@ -13,7 +13,7 @@ const Banner = () => {
           Discover fun, creative and exciting products made just for kids.
         </p>
 
-        <button className="mt-6 rounded-full bg-orange-500 px-6 py-3 text-white">
+        <button className="mt-6 rounded-full bg-primary px-6 py-3 text-white">
           Explore Products
         </button>
       </div>
